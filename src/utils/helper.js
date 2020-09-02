@@ -23,3 +23,13 @@ export const parseNews = news => news.map(item => ({
   [DATA_TYPE_TITLE]: item.title,
   [DATA_TYPE_DOMAIN]: item.domain
 }));
+
+export const sortByAlphabet = (data, dataType) => data.sort((a, b) => {
+  if (a[dataType] && b[dataType]) {
+    return a[dataType].localeCompare(b[dataType]);
+  } else { return -1; }
+});
+
+export const sortNewsByTimeAdded = data => data.sort((a, b) => b[DATA_TYPE_TIME] - a[DATA_TYPE_TIME]);
+export const sortNewsByTitle = data => sortByAlphabet(data, DATA_TYPE_TITLE);
+export const sortNewsByDomain = data => sortByAlphabet(data, DATA_TYPE_DOMAIN);

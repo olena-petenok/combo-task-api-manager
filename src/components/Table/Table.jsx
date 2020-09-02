@@ -4,20 +4,29 @@ import './table.sass';
 
 import Column from '../Column/Column';
 
-import { DATA_TYPE_TIME_ADDED, DATA_TYPE_TITLE, DATA_TYPE_DOMAIN } from '../../constants/strings.js';
-// import {  } from '../../utils/helper.js';
+import {
+  LIST_IS_EMPTY_ERROR_MESSAGE,
+  DATA_TYPE_TIME_ADDED, DATA_TYPE_TITLE, DATA_TYPE_DOMAIN,
+  COLUMN_TITLE_TIME_ADDED, COLUMN_TITLE_TITLE, COLUMN_TITLE_DOMAIN
+} from '../../constants/strings.js';
 
 function Table(props) {
-  const { news } = props;
+  const { news, sortByTimeAdded, sortByTitle, sortByDomain } = props;
 
   return (
     <>
-      { (!news || news.length) === 0 ? <h6>The list is empty</h6> :
-        <>
-          <Column key={DATA_TYPE_TIME_ADDED} news={news} dataType={DATA_TYPE_TIME_ADDED} />
-          <Column key={DATA_TYPE_TITLE} news={news} dataType={DATA_TYPE_TITLE} />
-          <Column key={DATA_TYPE_DOMAIN} news={news} dataType={DATA_TYPE_DOMAIN} />
-        </>
+      { (!news || news.length === 0) ? <h6>{LIST_IS_EMPTY_ERROR_MESSAGE}</h6> :
+        <ul className="table">
+          <li className="column">
+            <Column news={news} dataType={DATA_TYPE_TIME_ADDED} sort={sortByTimeAdded} title={COLUMN_TITLE_TIME_ADDED} />
+          </li>
+          <li className="column">
+            <Column news={news} dataType={DATA_TYPE_TITLE} sort={sortByTitle} title={COLUMN_TITLE_TITLE} />
+          </li>
+          <li className="column">
+            <Column news={news} dataType={DATA_TYPE_DOMAIN} sort={sortByDomain} title={COLUMN_TITLE_DOMAIN} />
+          </li>
+        </ul>
       }
     </>
   );

@@ -15,8 +15,13 @@ export const API_AMOUNT_OF_PAGES_FOR_SHOW = 2;
 export const API_AMOUNT_OF_PAGES_FOR_JOBS = 1;
 
 export const HTTP_ERROR_MESSAGE = "HTTP error! Status:";
+export const LIST_IS_EMPTY_ERROR_MESSAGE = "The list is empty";
 
 export const DATA_TYPE_TIME = "time";
 export const DATA_TYPE_TIME_ADDED = "timeAdded";
 export const DATA_TYPE_TITLE = "title";
 export const DATA_TYPE_DOMAIN = "domain";
+
+export const COLUMN_TITLE_TITLE = "Sort by title";
+export const COLUMN_TITLE_TIME_ADDED = "Sort by time added";
+export const COLUMN_TITLE_DOMAIN = "Sort by domain";
