@@ -3,6 +3,7 @@ import React from 'react';
 import './table.sass';
 
 import Column from '../Column/Column';
+import Button from '../Button/Button';
 
 import {
   LIST_IS_EMPTY_ERROR_MESSAGE,
@@ -11,22 +12,25 @@ import {
 } from '../../constants/strings.js';
 
 function Table(props) {
-  const { news, sortByTimeAdded, sortByTitle, sortByDomain } = props;
+  const { news, sortByTimeAdded, sortByTitle, sortByDomain, loadNextPage } = props;
 
   return (
     <>
       { (!news || news.length === 0) ? <h6>{LIST_IS_EMPTY_ERROR_MESSAGE}</h6> :
-        <ul className="table">
-          <li className="column">
-            <Column news={news} dataType={DATA_TYPE_TIME_ADDED} sort={sortByTimeAdded} title={COLUMN_TITLE_TIME_ADDED} />
-          </li>
-          <li className="column">
-            <Column news={news} dataType={DATA_TYPE_TITLE} sort={sortByTitle} title={COLUMN_TITLE_TITLE} />
-          </li>
-          <li className="column">
-            <Column news={news} dataType={DATA_TYPE_DOMAIN} sort={sortByDomain} title={COLUMN_TITLE_DOMAIN} />
-          </li>
-        </ul>
+        <section id="table">
+          <ul className="table">
+            <li className="column">
+              <Column news={news} dataType={DATA_TYPE_TIME_ADDED} sort={sortByTimeAdded} title={COLUMN_TITLE_TIME_ADDED} />
+            </li>
+            <li className="column">
+              <Column news={news} dataType={DATA_TYPE_TITLE} sort={sortByTitle} title={COLUMN_TITLE_TITLE} />
+            </li>
+            <li className="column">
+              <Column news={news} dataType={DATA_TYPE_DOMAIN} sort={sortByDomain} title={COLUMN_TITLE_DOMAIN} />
+            </li>
+          </ul>
+          <Button parentFunction={loadNextPage} />
+        </section>
       }
     </>
   );

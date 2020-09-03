@@ -33,3 +33,19 @@ export const sortByAlphabet = (data, dataType) => data.sort((a, b) => {
 export const sortNewsByTimeAdded = data => data.sort((a, b) => b[DATA_TYPE_TIME] - a[DATA_TYPE_TIME]);
 export const sortNewsByTitle = data => sortByAlphabet(data, DATA_TYPE_TITLE);
 export const sortNewsByDomain = data => sortByAlphabet(data, DATA_TYPE_DOMAIN);
+
+export const filterUniqueByIdForNews = data => {
+  let result = [];
+  data.forEach(item => {
+    if(result.findIndex(x => x.id === item.id) <= -1){
+      result.push({
+        id: item.id,
+        [DATA_TYPE_TIME]: item.time,
+        [DATA_TYPE_TIME_ADDED]: item.timeAdded,
+        [DATA_TYPE_TITLE]: item.title,
+        [DATA_TYPE_DOMAIN]: item.domain
+      });
+    }
+  });
+  return result;
+}

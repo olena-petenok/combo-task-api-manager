@@ -1,39 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 
 import Table from '../Table/Table';
 
-import { DOCUMENT_TITLE, API_NEWS } from '../../constants/strings.js';
-
 import {
-  fetchData, parseNews,
-  sortNewsByTimeAdded, sortNewsByTitle, sortNewsByDomain
-} from '../../utils/helper.js';
+  API_NEWS, API_AMOUNT_OF_PAGES_FOR_NEWS,
+  ACTION_SET_NEWS_DATA, ACTION_LOAD_NEXT_PAGE,
+  ACTION_SORT_NEWS_BY_TIME_ADDED, ACTION_SORT_NEWS_BY_TITLE, ACTION_SORT_NEWS_BY_DOMAIN
+} from '../../constants/strings.js';
+
+import { fetchData, parseNews, filterUniqueByIdForNews } from '../../utils/helper.js';
+import { reducer, initialState } from '../../utils/useReducerData.js';
 
 function Page() {
-  const [newsData, setNewsData] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-
-  useEffect(() => { document.title = DOCUMENT_TITLE; });
-  // useEffect(() => { console.log(newsData); }, [newsData]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     fetchData(API_NEWS, 1).then(response => {
-      if (!isDataLoaded) {
-        setIsDataLoaded(true);
-        setNewsData(parseNews(response));
-      }
+      dispatch({ data: parseNews(response), type: ACTION_SET_NEWS_DATA });
     }).catch((exception) => console.log(exception));
-  }, [isDataLoaded]);
+  }, [state.isDataLoaded]);
 
-  const setNewsDataSortedByTimeAdded = () => { setNewsData(sortNewsByTimeAdded([...newsData])); }
-  const setNewsDataSortedByTitle = () => { setNewsData(sortNewsByTitle([...newsData])); }
-  const setNewsDataSortedByDomain = () => { setNewsData(sortNewsByDomain([...newsData])); }
+  // useEffect(() => { console.log("state (newsData):"); console.log(state.newsData); }, [state.newsData]);
+
+  const loadNextPage = () => {
+    if (state.isDataLoaded && state.currentPageToLoad <= API_AMOUNT_OF_PAGES_FOR_NEWS) {
+      fetchData(API_NEWS, state.currentPageToLoad).then(response => {
+        const newData = parseNews(response);
+        let rawData = state.newsData.concat(newData);
+        let filteredData = filterUniqueByIdForNews(rawData);
+        dispatch({ data: filteredData, type: ACTION_LOAD_NEXT_PAGE });
+      }).catch((exception) => console.log(exception));
+    }
+  }
 
   return (
-    <Table news={newsData}
-           sortByTimeAdded={setNewsDataSortedByTimeAdded}
-           sortByTitle={setNewsDataSortedByTitle}
-           sortByDomain={setNewsDataSortedByDomain} />
+    <Table news={state.newsData}
+           sortByTimeAdded={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TIME_ADDED }) }
+           sortByTitle={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TITLE }) }
+           sortByDomain={ () => dispatch({ type: ACTION_SORT_NEWS_BY_DOMAIN }) }
+           loadNextPage={loadNextPage} />
   );
 }
 
