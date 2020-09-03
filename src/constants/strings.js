@@ -22,8 +22,11 @@ export const LIST_IS_EMPTY_ERROR_MESSAGE = "The list is empty";
 export const ACTION_SET_NEWS_DATA = 'setNewsData';
 export const ACTION_LOAD_NEXT_PAGE = 'loadNextPage';
 export const ACTION_SORT_NEWS_BY_TIME_ADDED = 'sortNewsByTimeAdded';
+export const ACTION_SORT_REVERSE_NEWS_BY_TIME_ADDED = 'sortReverseNewsByTimeAdded';
 export const ACTION_SORT_NEWS_BY_TITLE = 'sortNewsByTitle';
+export const ACTION_SORT_REVERSE_NEWS_BY_TITLE = 'sortReverseNewsByTitle';
 export const ACTION_SORT_NEWS_BY_DOMAIN = 'sortNewsByDomain';
+export const ACTION_SORT_REVERSE_NEWS_BY_DOMAIN = 'sortReverseNewsByDomain';
 
 export const DATA_TYPE_TIME = "time";
 export const DATA_TYPE_TIME_ADDED = "timeAdded";

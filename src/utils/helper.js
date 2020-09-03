@@ -30,9 +30,18 @@ export const sortByAlphabet = (data, dataType) => data.sort((a, b) => {
   } else { return -1; }
 });
 
+export const sortReverseByAlphabet = (data, dataType) => data.sort((a, b) => {
+  if (a[dataType] && b[dataType]) {
+    return b[dataType].localeCompare(a[dataType]);
+  } else { return -1; }
+});
+
 export const sortNewsByTimeAdded = data => data.sort((a, b) => b[DATA_TYPE_TIME] - a[DATA_TYPE_TIME]);
+export const sortReverseNewsByTimeAdded = data => data.sort((a, b) => a[DATA_TYPE_TIME] - b[DATA_TYPE_TIME]);
 export const sortNewsByTitle = data => sortByAlphabet(data, DATA_TYPE_TITLE);
+export const sortReverseNewsByTitle = data => sortReverseByAlphabet(data, DATA_TYPE_TITLE);
 export const sortNewsByDomain = data => sortByAlphabet(data, DATA_TYPE_DOMAIN);
+export const sortReverseNewsByDomain = data => sortReverseByAlphabet(data, DATA_TYPE_DOMAIN);
 
 export const filterUniqueByIdForNews = data => {
   let result = [];

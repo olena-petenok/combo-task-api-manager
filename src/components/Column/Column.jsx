@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './column.sass';
 
@@ -16,16 +16,23 @@ function ColumnItem(props) {
 
 function Column(props) {
   const {
-    title, news, dataType, sort,
+    title, news, dataType, sort, sortReverse,
     decoration, titleIntoButtonDecoration, mobileColumn
   } = props;
+
+  const [sortOrder, setSortOrder] = useState(true);
 
   let data = null;
   if (news && news.length !== 0) { data = news.map(item => <ColumnItem key={item.id} value={item[dataType]} />); }
 
+  const onSortClick = event => {
+    sortOrder ? sort() : sortReverse();
+    setSortOrder(value => !value);
+  }
+
   return (
     <li className={`column ${decoration}`}>
-      <h6 className={`title ${titleIntoButtonDecoration}`} onClick={event => sort()}>{title}</h6>
+      <h6 className={`title ${titleIntoButtonDecoration}`} onClick={onSortClick}>{title}</h6>
       <ul className={`column-list ${mobileColumn}`}>{data}</ul>
     </li>
   );

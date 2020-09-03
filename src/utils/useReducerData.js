@@ -1,9 +1,15 @@
 import {
   ACTION_SET_NEWS_DATA, ACTION_LOAD_NEXT_PAGE,
-  ACTION_SORT_NEWS_BY_TIME_ADDED, ACTION_SORT_NEWS_BY_TITLE, ACTION_SORT_NEWS_BY_DOMAIN
+  ACTION_SORT_NEWS_BY_TIME_ADDED, ACTION_SORT_REVERSE_NEWS_BY_TIME_ADDED,
+  ACTION_SORT_NEWS_BY_TITLE, ACTION_SORT_REVERSE_NEWS_BY_TITLE,
+  ACTION_SORT_NEWS_BY_DOMAIN, ACTION_SORT_REVERSE_NEWS_BY_DOMAIN
 } from '../constants/strings.js';
 
-import { sortNewsByTimeAdded, sortNewsByTitle, sortNewsByDomain } from '../utils/helper.js';
+import {
+  sortNewsByTimeAdded, sortReverseNewsByTimeAdded,
+  sortNewsByTitle, sortReverseNewsByTitle,
+  sortNewsByDomain, sortReverseNewsByDomain
+} from '../utils/helper.js';
 
 export const initialState = {
   isDataLoaded: false,
@@ -19,10 +25,16 @@ export function reducer (state, action) {
       return { ...state, currentPageToLoad: state.currentPageToLoad + 1, newsData: action.data };
     case ACTION_SORT_NEWS_BY_TIME_ADDED:
       return { ...state, newsData: sortNewsByTimeAdded([...state.newsData]) };
+    case ACTION_SORT_REVERSE_NEWS_BY_TIME_ADDED:
+      return { ...state, newsData: sortReverseNewsByTimeAdded([...state.newsData]) };
     case ACTION_SORT_NEWS_BY_TITLE:
       return { ...state, newsData: sortNewsByTitle([...state.newsData]) };
+    case ACTION_SORT_REVERSE_NEWS_BY_TITLE:
+      return { ...state, newsData: sortReverseNewsByTitle([...state.newsData]) };
     case ACTION_SORT_NEWS_BY_DOMAIN:
       return { ...state, newsData: sortNewsByDomain([...state.newsData]) };
+    case ACTION_SORT_REVERSE_NEWS_BY_DOMAIN:
+      return { ...state, newsData: sortReverseNewsByDomain([...state.newsData]) };
     default:
       throw new Error();
   }

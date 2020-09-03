@@ -5,7 +5,9 @@ import Table from '../Table/Table';
 import {
   API_NEWS, API_AMOUNT_OF_PAGES_FOR_NEWS,
   ACTION_SET_NEWS_DATA, ACTION_LOAD_NEXT_PAGE,
-  ACTION_SORT_NEWS_BY_TIME_ADDED, ACTION_SORT_NEWS_BY_TITLE, ACTION_SORT_NEWS_BY_DOMAIN
+  ACTION_SORT_NEWS_BY_TIME_ADDED, ACTION_SORT_REVERSE_NEWS_BY_TIME_ADDED,
+  ACTION_SORT_NEWS_BY_TITLE, ACTION_SORT_REVERSE_NEWS_BY_TITLE,
+  ACTION_SORT_NEWS_BY_DOMAIN, ACTION_SORT_REVERSE_NEWS_BY_DOMAIN
 } from '../../constants/strings.js';
 
 import { fetchData, parseNews, filterUniqueByIdForNews } from '../../utils/helper.js';
@@ -50,8 +52,11 @@ function Page() {
     <>
       <Table news={state.newsData}
              sortByTimeAdded={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TIME_ADDED }) }
+             sortReverseByTimeAdded={ () => dispatch({ type: ACTION_SORT_REVERSE_NEWS_BY_TIME_ADDED }) }
              sortByTitle={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TITLE }) }
-             sortByDomain={ () => dispatch({ type: ACTION_SORT_NEWS_BY_DOMAIN }) } />
+             sortReverseByTitle={ () => dispatch({ type: ACTION_SORT_REVERSE_NEWS_BY_TITLE }) }
+             sortByDomain={ () => dispatch({ type: ACTION_SORT_NEWS_BY_DOMAIN }) }
+             sortReverseByDomain={ () => dispatch({ type: ACTION_SORT_REVERSE_NEWS_BY_DOMAIN }) } />
     </>
   );
 }
