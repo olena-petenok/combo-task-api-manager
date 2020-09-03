@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 import './table.sass';
 
+import Button from '../Button/Button';
 import Column from '../Column/Column';
 
 import {
   LIST_IS_EMPTY_ERROR_MESSAGE,
-  BUTTON_SORT_BY_DATE,
+  BUTTON_SORT_BY_DATE, BUTTON_SWITCH_API,
   SMALL_SCREEN_MIN,
   DATA_TYPE_TIME_ADDED, DATA_TYPE_TITLE, DATA_TYPE_DOMAIN,
   COLUMN_TITLE_TIME_ADDED, COLUMN_TITLE_TITLE, COLUMN_TITLE_DOMAIN,
@@ -15,6 +16,7 @@ import {
 function Table(props) {
   const {
     news,
+    switchAPI,
     sortByTimeAdded, sortReverseByTimeAdded,
     sortByTitle, sortReverseByTitle,
     sortByDomain, sortReverseByDomain
@@ -33,16 +35,21 @@ function Table(props) {
                       titleIntoButtonDecoration={"title-as-a-button"} mobileColumn={"mobile-column"} />
             </ul>
           </section>
-        : <section id="table">
-            <ul className="table">
-              <Column news={news} dataType={DATA_TYPE_TIME_ADDED} title={COLUMN_TITLE_TIME_ADDED}
-                      sort={sortByTimeAdded} sortReverse={sortReverseByTimeAdded} decoration={"left-border"} />
-              <Column news={news} dataType={DATA_TYPE_TITLE} title={COLUMN_TITLE_TITLE}
-                      sort={sortByTitle} sortReverse={sortReverseByTitle} />
-              <Column news={news} dataType={DATA_TYPE_DOMAIN} title={COLUMN_TITLE_DOMAIN}
-                      sort={sortByDomain} sortReverse={sortReverseByDomain} decoration={"right-border"} />
-            </ul>
-          </section>
+        : <>
+            <section id="table">
+              <div className="button-container">
+                <Button parentFunction={switchAPI} buttonValue={BUTTON_SWITCH_API} />
+              </div>
+              <ul className="table">
+                <Column news={news} dataType={DATA_TYPE_TIME_ADDED} title={COLUMN_TITLE_TIME_ADDED}
+                        sort={sortByTimeAdded} sortReverse={sortReverseByTimeAdded} decoration={"left-border"} />
+                <Column news={news} dataType={DATA_TYPE_TITLE} title={COLUMN_TITLE_TITLE}
+                        sort={sortByTitle} sortReverse={sortReverseByTitle} />
+                <Column news={news} dataType={DATA_TYPE_DOMAIN} title={COLUMN_TITLE_DOMAIN}
+                        sort={sortByDomain} sortReverse={sortReverseByDomain} decoration={"right-border"} />
+              </ul>
+            </section>
+          </>
       }
     </>
   );
