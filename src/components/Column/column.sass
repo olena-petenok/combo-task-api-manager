@@ -4,6 +4,8 @@
 
 .column
   text-align: center
+  @media ($media-max-width: $media-small-screen)
+    text-align: left
   .title
     font-size: 22px
     padding: 10px
@@ -13,21 +15,46 @@
     &:hover
       background-color: $main-background-color
     &.title-as-a-button
+      z-index: 10000
       position: fixed
+      overflow: visible
       min-width: 100%
       min-height: 0px
       background-color: $border-color
   .column-list
     &.mobile-column
       margin-top: 47px
+      line-height: 19px
     .item
-      padding: 5px
+      padding-top: 2px
+      padding-bottom: 2px
+      padding-left: 5px
+      padding-right: 5px
       border: 1px solid $border-color
-      min-height: 19px
+      height: 19px
       @media ($media-max-width: $media-large-screen)
-        min-height: 38px
+        height: 38px
       @media ($media-max-width: $media-medium-screen)
-        min-height: 57px
+        height: 57px
       .link
         text-decoration: none
         color: $main-text-color
+    .overflow
+      @media ($media-max-width: $media-small-screen)
+        --max-lines: 3
+        position: relative
+        max-height: 57px
+        overflow: hidden
+        padding-right: 5px
+        &::before
+          position: absolute
+          content: ""
+          inset-block-end: 0
+          inset-inline-end: 0
+        &::after
+          content: "..."
+          position: absolute
+          inset-inline-end: 0
+          width: 5px
+          height: 5px
+          background: white

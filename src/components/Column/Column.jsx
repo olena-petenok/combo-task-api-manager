@@ -6,7 +6,7 @@ import { LINK_TO_COMMENTS } from '../../constants/strings.js';
 
 function ColumnItem(props) {
   return (
-    <li className="item">
+    <li className="item overflow">
       <a href={LINK_TO_COMMENTS} target="_blank" className="link">
         {props.value}
       </a>
