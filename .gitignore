@@ -4,8 +4,5 @@
 # production
 /build
 
-# production
-/prod
-
 # mistake from master
 /src/build
