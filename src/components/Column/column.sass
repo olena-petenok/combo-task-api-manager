@@ -2,13 +2,32 @@
 @import '../../constants/styles/colors.sass'
 @import '../../constants/styles/media-data.sass'
 
-.title
-  font-size: 26px
-  padding: 10px
-  &:hover
-    background-color: $main-background-color
-
-.column-list
-  padding: 10px
-  .item
-    padding: 5px
+.column
+  text-align: center
+  .title
+    font-size: 22px
+    padding: 10px
+    border: 1px solid $border-color
+    @media ($media-max-width: $media-large-screen)
+      min-height: 54px
+    &:hover
+      background-color: $main-background-color
+    &.title-as-a-button
+      position: fixed
+      min-width: 100%
+      min-height: 0px
+      background-color: $border-color
+  .column-list
+    &.mobile-column
+      margin-top: 47px
+    .item
+      padding: 5px
+      border: 1px solid $border-color
+      min-height: 19px
+      @media ($media-max-width: $media-large-screen)
+        min-height: 38px
+      @media ($media-max-width: $media-medium-screen)
+        min-height: 57px
+      .link
+        text-decoration: none
+        color: $main-text-color

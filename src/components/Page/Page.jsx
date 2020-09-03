@@ -20,7 +20,7 @@ function Page() {
     }).catch((exception) => console.log(exception));
   }, [state.isDataLoaded]);
 
-  // useEffect(() => { console.log("state (newsData):"); console.log(state.newsData); }, [state.newsData]);
+  // useEffect(() => { console.log(state.newsData); }, [state.newsData]);
 
   const loadNextPage = () => {
     if (state.isDataLoaded && state.currentPageToLoad <= API_AMOUNT_OF_PAGES_FOR_NEWS) {
@@ -33,12 +33,26 @@ function Page() {
     }
   }
 
+  // multiple similar promises and not the end of the page :(
+  useEffect(() => {
+    const handleScroll = event => {
+      if (state.isDataLoaded && state.currentPageToLoad <= API_AMOUNT_OF_PAGES_FOR_NEWS) {
+        const partOfTheTable = 0.25 * document.getElementById('table').scrollHeight;
+        if (window.pageYOffset > partOfTheTable) { loadNextPage(); }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [state.currentPageToLoad, state.isDataLoaded]);
+
   return (
-    <Table news={state.newsData}
-           sortByTimeAdded={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TIME_ADDED }) }
-           sortByTitle={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TITLE }) }
-           sortByDomain={ () => dispatch({ type: ACTION_SORT_NEWS_BY_DOMAIN }) }
-           loadNextPage={loadNextPage} />
+    <>
+      <Table news={state.newsData}
+             sortByTimeAdded={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TIME_ADDED }) }
+             sortByTitle={ () => dispatch({ type: ACTION_SORT_NEWS_BY_TITLE }) }
+             sortByDomain={ () => dispatch({ type: ACTION_SORT_NEWS_BY_DOMAIN }) } />
+    </>
   );
 }
 
